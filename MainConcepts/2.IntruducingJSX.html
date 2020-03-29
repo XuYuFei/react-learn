@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSX简介</title>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="root1"></div>
+  <div id="root2"></div>
+  <div id="root3"></div>
+
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js" ></script>
+
+  <script type="text/babel">
+    // 嵌入变量
+    const name = 'Josh Peres'
+    const element = <h1>Hello, { name }</h1>
+
+    ReactDOM.render(
+      element,
+      document.getElementById('root')
+    )
+  </script>
+
+  <script type="text/babel">
+    // 嵌入表达式
+    const element = <h1>1 + 2 = { 1 + 2 }</h1>
+    ReactDOM.render(
+      element,
+      document.getElementById('root1')
+    )
+  </script>
+
+  <script type="text/babel">
+    // 嵌入函数
+    function formatName (user) {
+      return user.firstName + ' ' + user.lastName
+    }
+    
+    const user = {
+      firstName: 'Harper',
+      lastName: 'Perez'
+    }
+
+    const element = (
+      <h1>
+        Hello, { formatName(user) }
+      </h1>
+    )
+    ReactDOM.render(
+      element,
+      document.getElementById('root2')
+    )
+  </script>
+
+  <script type="text/babel">
+    // JSX也是一个表达式
+    function getGreeting (user) {
+      if (user) {
+        return <h1>Hello, { formatName(user) }!</h1>
+      }
+      return <h1>Hello, Stranger.</h1>
+    }
+    ReactDOM.render(
+      getGreeting(),
+      document.getElementById('root3')
+    )
+  </script>
+
+  <script type="text/babel">
+    // JSX特定属性
+    const element = <div tabIndex="0" firstName={ user.firstName } ></div>
+  </script>
+
+
+
+</body>
+</html>
