@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lists and Keys</title>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="root2"></div>
+  <div id="root3"></div>
+
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js" ></script>
+
+  <script type="text/babel">
+    // 转换列表
+    let numbers = [1, 2, 3, 4, 5]
+    const doubled = numbers.map((number) => number * 2)
+    console.log(doubled)
+
+    // 渲染多个组件
+    numbers = [1, 2, 3, 4, 5]
+    const listItems = numbers.map((number) => 
+      <li>{ number }</li>
+    )
+
+    ReactDOM.render(
+      <ul>{ listItems }</ul>,
+      document.getElementById('root')
+    )
+
+    // 基础列表组件
+    function NumberList (props) {
+      const numbers = props.numbers
+      const listItems = numbers.map((number) => 
+        <li key={ number.toString() }>
+          { number }
+        </li>
+      )
+      return (
+        <ul>{ listItems }</ul>
+      )
+    }
+
+    numbers = [1, 2, 3, 4, 5]
+    ReactDOM.render(
+      <NumberList numbers={ numbers } />,
+      document.getElementById('root2')
+    )
+
+    // key 只是在兄弟节点之间必须唯一
+    function Blog (props) {
+      const sidebar = (
+        <ul>
+          {
+            props.posts.map((post) => 
+              <li key={ post.id }>
+                { post.title }
+              </li>
+            )
+          }
+        </ul>
+      )
+
+      const content = props.posts.map((post) => 
+        <div key={ post.id }>
+          <h3>{ post.title }</h3>
+          <p>{ post.content }</p>
+        </div>
+      )
+      return (
+        <div>
+          { sidebar }
+          <hr />
+          { content }
+        </div>
+      )
+    }
+
+    const posts = [
+      { id: 1, title: 'Hello World', content: 'Welcome to learning React!' },
+      { id: 2, title: 'Installation', content: 'You can install React from npm.' }
+    ]
+
+    ReactDOM.render(
+      <Blog posts={ posts } />,
+      document.getElementById('root3')
+    )
+  </script>
+</body>
+</html>
