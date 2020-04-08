@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Composition vs Inheritance</title>
+  <style>
+    .FancyBorder { border-width: 3px; border-style: solid; margin-top: 40px; }
+    .FancyBorder-orange { border-color: orange;}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <div id="root2"></div>
+  <div id="root3"></div>
+  <div id="root4"></div>
+
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js" ></script>
+
+  <script type="text/babel">
+    // children prop
+    function FancyBorder (props) {
+      return (
+        <div className={ 'FancyBorder FancyBorder-' + props.color }>
+          { props.children }
+        </div>
+      )
+    }
+
+    function WelcomeDialog () {
+      return (
+        <FancyBorder color="orange" >
+          <h1 className="Dialog-title">
+            Welcome
+          </h1>
+          <p className="Dialog-message">
+            Thank you for visiting our spacecraft!
+          </p>
+        </FancyBorder>
+      )
+    }
+
+    ReactDOM.render(
+      <WelcomeDialog />,
+      document.getElementById('root')
+    )
+
+    // 自定义props,类似“插槽”
+    function SplitPane (props) {
+      return (
+        <div className="SplitePane">
+          <div className="Splite-left">
+            { props.left }
+          </div>
+          <div className="Splite-right">
+            { props.right }
+          </div>
+        </div>
+      )
+    }
+
+    function Contacts () {
+      return (
+        <div>Contact me.</div>
+      )
+    }
+
+    function Chat () {
+      return (
+        <div>Chat with me.</div>
+      )
+    }
+
+    function App () {
+      return (
+        <SplitPane
+          left={
+            <Contacts />
+          }
+          right={
+            <Chat />
+          } />
+      )
+    }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root2')
+    )
+
+    // 特例关系
+    function Dialog (props) {
+      return (
+        <FancyBorder color="orange" >
+          <h1 className="Dialog-title">{ props.title }</h1>
+          <p className="Dialog-message">{ props.message }</p>
+        </FancyBorder>
+      )
+    }
+
+    function WelcomeDialog () {
+      return (
+        <Dialog title="Welcome"
+          message="Thank you for visiting our spacecraft!" />
+      )
+    }
+
+    ReactDOM.render(
+      <WelcomeDialog />,
+      document.getElementById('root3')
+    )
+
+    // class形式定义的组件
+function Dialog (props) {
+  return (
+    <FancyBorder color="orange" >
+      <h1 className="Dialog-title">{ props.title }</h1>
+      <p className="Dialog-message">{ props.message }</p>
+      { props.children }
+    </FancyBorder>
+  )
+}
+
+class SignUpDialog extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = { login: '' }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSignUp = this.handleSignUp.bind(this)
+  }
+
+  handleChange (e) {
+    this.setState({ login: e.target.value })
+  }
+
+  handleSignUp () {
+    console.log(`Welcome aboard, ${this.state.login}!`)
+  }
+
+  render () {
+    return (
+      <Dialog 
+        title="Mars Exploration Program"
+        message="How should we refer to you?" >
+        <input value={ this.state.login } onChange={ this.handleChange } />
+        <button onClick={ this.handleSignUp }>Sign Me Up!</button>
+      </Dialog>
+    )
+  }
+}
+
+ReactDOM.render(
+  <SignUpDialog />,
+  document.getElementById('root4')
+)
+  </script>
+</body>
+</html>
