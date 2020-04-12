@@ -4,47 +4,145 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thinking in React</title>
-<style>
-  .filterable-product-table {
-    width: 240px;
-    border: 1px solid silver;
-    padding: 20px;
-    margin: 100px;
-    font-size: 14px;
-  }
-  .search-bar {
-    line-height: 30px;
-  }
-  .search-bar .keyword {
-    width: 100%;
-    height: 30px;
-    border: 1px solid #ddd;
-    text-indent: 10px;
-  }
-  .product-table {
-    margin-top: 15px;
-    width: 100%;
-    text-align: left;
-    line-height: 30px;
-  }
-  .product-category-row {
-    color: #555;
-  }
-  .product-row {
-    line-height: 20px;
-  }
-</style>
+  <style>
+    .filterable-product-table {
+      width: 240px;
+      border: 1px solid silver;
+      padding: 20px;
+      margin: 100px;
+      font-size: 14px;
+    }
+    .search-bar {
+      line-height: 30px;
+    }
+    .search-bar .keyword {
+      width: 100%;
+      height: 30px;
+      border: 1px solid #ddd;
+      text-indent: 10px;
+    }
+    .product-table {
+      margin-top: 15px;
+      width: 100%;
+      text-align: left;
+      line-height: 30px;
+    }
+    .product-category-row {
+      color: #555;
+    }
+    .product-row {
+      line-height: 20px;
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
+  <div id="root2"></div>
+  <div id="root3"></div>
 
   <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js" ></script>
 
   <script type="text/babel">
+
+    // 5.产品
+    class ProductRow extends React.Component {
+      render () {
+        const product = this.props.product
+        const name = product.stocked ?
+          product.name : 
+          <span style={{ color: 'red' }}>
+            { product.name }
+          </span>
+
+        return (
+          <tr class="product-row">
+            <td>{ name }</td>
+            <td>{ product.price }</td>
+          </tr>
+        )
+      }
+    }
+
+    // 4.产品类别
+    class ProductCategoryRow extends React.Component {
+      render () {
+        const category = this.props.category
+        return (
+          <tr class="product-category-row">
+            <th colspan="2">{ category }</th>
+          </tr>
+        )
+      }
+    }
+
+    // 3.数据内容
+    class ProductTable extends React.Component {
+      render () {
+        const rows = []
+        let lastCategory = null
+        
+        this.props.products.forEach((product) => {
+          if (product.category !== lastCategory) {
+            rows.push(
+              <ProductCategoryRow
+                key={ product.category } 
+                category={ product.category } />
+            )
+          }
+          rows.push(
+            <ProductRow
+              product={ product }
+              key={ product.name } />
+          )
+          lastCategory = product.category
+        })
+
+        return (
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>{ rows }</tbody>
+          </table>
+        )
+      }
+    }
+
+    // 2.用户输入
+    class SearchBar extends React.Component {
+      render () {
+        return (
+          <form class="search-bar">
+            <input type="text" placeholder="Search..." class="keyword" />
+            <p>
+              <input type="checkbox" />
+              {''}
+              Only show products in stock
+            </p>
+          </form>
+        )
+      }
+    }
+
+    // 1.示例整体
+    class FilterableProductTable extends React.Component {
+      render () {
+        return (
+          <div class="filterable-product-table">
+            <SearchBar />
+            <ProductTable products={ this.props.products } />
+          </div>
+        )
+      }
+    }
+
     // JSON API
-    const api = [
+    const PRODUCTS = [
       {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
       {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
       {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
@@ -52,73 +150,203 @@
       {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
       {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
     ]
+    ReactDOM.render(
+      <FilterableProductTable products={ PRODUCTS } />,
+      document.getElementById('root')
+    )
 
-    // 5.产品
-    function ProductRow (props) {
-      return (
-        <tr class="product-row">
-          <td>Football</td>
-          <td>$49.99</td>
-        </tr>
-      )
-    }
-
-    // 4.产品类别
-    function ProductCategoryRow (props) {
-      return (
-        <tr class="product-category-row">
-          <th colspan="2">Sporting Goods</th>
-        </tr>
-      )
-    }
-
+    // step4
+    
     // 3.数据内容
-    function ProductTable (props) {
-      return (
-        <table class="product-table">
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-          </tr>
-          <ProductCategoryRow />
-          <ProductRow />
-        </table>
-      )
-    }
+    class ProductTable2 extends React.Component {
+      render () {
+        const filterText = this.props.filterText
+        const inStockOnly = this.props.inStockOnly
 
+        const rows = []
+        let lastCategory = null
+        
+        this.props.products.forEach((product) => {
+          if (product.name.indexOf(filterText) === -1) {
+            return
+          }
+          if (inStockOnly && !prodcut.stocked) {
+            return
+          }
+
+          if (product.category !== lastCategory) {
+            rows.push(
+              <ProductCategoryRow
+                key={ product.category } 
+                category={ product.category } />
+            )
+          }
+          rows.push(
+            <ProductRow
+              product={ product }
+              key={ product.name } />
+          )
+          lastCategory = product.category
+        })
+
+        return (
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>{ rows }</tbody>
+          </table>
+        )
+      }
+    }
+    
     // 2.用户输入
-    function SearchBar (props) {
-      return (
-        <div class="search-bar">
-          <input type="text" name="keyword" placeholder="Search..." class="keyword" />
-          <br/>
-          <label>
-            <input type="checkbox" name="stockProduct" />
-            Only show products in stock
-          </label>
-        </div>
-      )
+    class SearchBar2 extends React.Component {
+      render () {
+        const filterText = this.props.filterText
+        const inStockOnly = this.props.inStockOnly
+
+        return (
+          <form class="search-bar">
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              class="keyword"
+              value={ filterText } />
+            <p>
+              <input 
+                type="checkbox"
+                checked={ inStockOnly } />
+              {''}
+              Only show products in stock
+            </p>
+          </form>
+        )
+      }
     }
 
     // 1.示例整体
-    class FilterableProductTable extends React.Component {
+    class FilterableProductTable2 extends React.Component {
       constructor (props) {
         super(props)
+        this.state = {
+          filterText: 'ball',
+          inStockOnly: false
+        }
       }
 
       render () {
         return (
           <div class="filterable-product-table">
-            <SearchBar />
-            <ProductTable />
+            <SearchBar2
+              filterText={ this.state.filterText }
+              inStockOnly={ this.state.inStockOnly } />
+            <ProductTable2
+              products={ this.props.products }
+              filterText={ this.state.filterText }
+              inStockOnly={ this.state.inStockOnly } />
           </div>
         )
       }
     }
 
     ReactDOM.render(
-      <FilterableProductTable />,
-      document.getElementById('root')
+      <FilterableProductTable2 products={ PRODUCTS } />,
+      document.getElementById('root2')
+    )
+
+    // step5
+    
+    // 2.用户输入
+    class SearchBar3 extends React.Component {
+      constructor (props) {
+        super(props)
+
+        this.handleFilterTextChange = this.handleFilterTextChange.bind(this)
+        this.handleInStockChange = this.handleInStockChange.bind(this)
+      }
+
+      handleFilterTextChange (e) {
+        this.props.onFilterTextChange(e.target.value)
+      }
+
+      handleInStockChange (e) {
+        this.props.onInStockChange(e.target.checked)
+      }
+
+      render () {
+        const filterText = this.props.filterText
+        const inStockOnly = this.props.inStockOnly
+
+        return (
+          <form class="search-bar">
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              class="keyword"
+              value={ filterText }
+              onChange={ this.handleFilterTextChange } />
+            <p>
+              <input 
+                type="checkbox"
+                checked={ inStockOnly }
+                onChange={ this.handleInStockChange } />
+              {''}
+              Only show products in stock
+            </p>
+          </form>
+        )
+      }
+    }
+
+    // 1.示例整体
+    class FilterableProductTable3 extends React.Component {
+      constructor (props) {
+        super(props)
+        this.state = {
+          filterText: '',
+          inStockOnly: false
+        }
+
+        this.handleFilterTextChange = this.handleFilterTextChange.bind(this)
+        this.handleInStockChange = this.handleInStockChange.bind(this)
+      }
+
+      handleFilterTextChange (filterText) {
+        this.setState({
+          filterText: filterText
+        })
+      }
+
+      handleInStockChange (inStockOnly) {
+        this.setState({
+          inStockOnly: inStockOnly
+        })
+      }
+
+      render () {
+        return (
+          <div class="filterable-product-table">
+            <SearchBar3
+              filterText={ this.state.filterText }
+              inStockOnly={ this.state.inStockOnly }
+              onFilterTextChange={ this.handleFilterTextChange }
+              onInStockChange={ this.handleInStockChange } />
+            <ProductTable2
+              products={ this.props.products }
+              filterText={ this.state.filterText }
+              inStockOnly={ this.state.inStockOnly } />
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <FilterableProductTable3 products={ PRODUCTS } />,
+      document.getElementById('root3')
     )
   </script>
 </body>
