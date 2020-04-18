@@ -1,0 +1,13 @@
+{
+  "jshint.enable": false,
+  "prettier.jsxSingleQuote": true,
+  "prettier.bracketSpacing": true,
+  "prettier.htmlWhitespaceSensitivity": "strict",
+  "prettier.jsxBracketSameLine": true,
+  "prettier.printWidth": 80,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": false,
+  "files.autoSave": "afterDelay",
+  "editor.formatOnSave": true
+}

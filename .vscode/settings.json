@@ -1,3 +1,9 @@
 {
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "afterDelay",
+  "prettier.semi": false,
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "minapp-vscode.prettier": {
+  
+  }
 }
