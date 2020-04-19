@@ -1,13 +1,11 @@
 {
   "jshint.enable": false,
-  "prettier.jsxSingleQuote": true,
-  "prettier.bracketSpacing": true,
-  "prettier.htmlWhitespaceSensitivity": "strict",
-  "prettier.jsxBracketSameLine": true,
-  "prettier.printWidth": 80,
-  "prettier.semi": true,
-  "prettier.singleQuote": true,
-  "prettier.arrowParens": false,
   "files.autoSave": "afterDelay",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "emmet.includeLanguages": {
+    "vue-html": "html",
+    "javascript": "javascriptreact"
+  },
+  "javascript.format.enable": true,
+  "[jsx-tags]": {}
 }
