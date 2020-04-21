@@ -1,50 +1,21 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import './App.css'
-import { add } from './math'
-import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-// 2.1 打包
-console.log(add(10, 20))
+const Demo1 = lazy(() => import('./views/3-Context/Demo1'))
+const Demo2 = lazy(() => import('./views/3-Context/Demo2'))
+const Demo3 = lazy(() => import('./views/3-Context/Demo3'))
 
-import('./math').then(math => {
-  console.log(math.add(10, 20))
-})
-
-// React.lazy
-const HelloWorld = React.lazy(() => import('./components/HelloWorld'))
-
-function MyComponent() {
-  return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <HelloWorld />
-      </Suspense>
-    </div>
-  )
-}
-
-function App() {
-  return (
-    <div className="App">
-      <MyComponent />
-    </div>
-  )
-}
-
-// 基于路由的代码分割
-const Home = lazy(() => import('./routes/Home'))
-const About = lazy(() => import('./routes/About'))
-
-const App2 = () => (
+const App = () => (
   <Router>
     <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route path="/about" component={About} />
+        <Route exact path="/Context/demo1" component={Demo1} />
+        <Route path="/Context/demo2" component={Demo2} />
+        <Route path="/Context/demo3" component={Demo3} />
       </Switch>
     </Suspense>
   </Router>
 )
 
-export default App2
+export default App

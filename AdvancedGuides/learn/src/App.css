@@ -34,9 +34,28 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
-body { padding: 100px; }
+body {
+  padding: 100px;
+}
+
+.dark {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.light {
+  background: #ddd;
+  color: #333;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
