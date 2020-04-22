@@ -8,7 +8,7 @@ function Feed(props) {
 function Avatar(props) {
   return (
     <div>
-      <img src={props.user.avatar} style={{ width: props.size }} />
+      <img src={props.user.avatar} style={{ width: props.size }} alt="头像" />
     </div>
   )
 }

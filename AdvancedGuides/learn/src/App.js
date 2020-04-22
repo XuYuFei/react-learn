@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 const Demo1 = lazy(() => import('./views/3-Context/Demo1'))
 const Demo2 = lazy(() => import('./views/3-Context/Demo2'))
 const Demo3 = lazy(() => import('./views/3-Context/Demo3'))
+const Demo4 = lazy(() => import('./views/3-Context/Demo4'))
 
 const App = () => (
   <Router>
@@ -13,6 +14,7 @@ const App = () => (
         <Route exact path="/Context/demo1" component={Demo1} />
         <Route path="/Context/demo2" component={Demo2} />
         <Route path="/Context/demo3" component={Demo3} />
+        <Route path="/Context/demo4" component={Demo4} />
       </Switch>
     </Suspense>
   </Router>
