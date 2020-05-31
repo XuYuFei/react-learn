@@ -26,10 +26,10 @@ function NavigationBar(props) {
     <div>
       <ul>
         <li>
-          <a href="#">Page1</a>
+          <a href="/">Page1</a>
         </li>
         <li>
-          <a href="#">Page2</a>
+          <a href="/">Page2</a>
         </li>
       </ul>
       {props.children}
