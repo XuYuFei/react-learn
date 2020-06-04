@@ -11,6 +11,8 @@ const Consumer = lazy(() => import('./views/3-Context/Consumer'))
 const DisplayName = lazy(() => import('./views/3-Context/DisplayName'))
 const Dynamic = lazy(() => import('./views/3-Context/dynamic/index'))
 const Dynamic2 = lazy(() => import('./views/3-Context/dynamic2/index'))
+const ErrorBoundaries = lazy(() => import('./views/4-ErrorBoundaries/Demo'))
+const Refs1 = lazy(() => import('./views/5-ForwardingRefs/Demo'))
 
 const App = () => (
   <Router>
@@ -25,6 +27,8 @@ const App = () => (
         <Route path="/Context/DisplayName" component={DisplayName} />
         <Route path="/Context/Dynamic" component={Dynamic} />
         <Route path="/Context/Dynamic2" component={Dynamic2} />
+        <Route path="/Context/ErrorBoundaries" component={ErrorBoundaries} />
+        <Route path="/Context/Refs1" component={Refs1} />
       </Switch>
     </Suspense>
   </Router>
