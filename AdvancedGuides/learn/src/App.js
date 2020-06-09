@@ -14,6 +14,7 @@ const Dynamic2 = lazy(() => import('./views/3-Context/dynamic2/index'))
 const ErrorBoundaries = lazy(() => import('./views/4-ErrorBoundaries/Demo'))
 const Refs1 = lazy(() => import('./views/5-ForwardingRefs/Demo'))
 const Refs2 = lazy(() => import('./views/5-ForwardingRefs/Demo2'))
+const Hoc1 = lazy(() => import('./views/7-Hoc/Demo1'))
 
 const App = () => (
   <Router>
@@ -31,6 +32,7 @@ const App = () => (
         <Route path="/Context/ErrorBoundaries" component={ErrorBoundaries} />
         <Route path="/Context/Refs1" component={Refs1} />
         <Route path="/Context/Refs2" component={Refs2} />
+        <Route path="/Context/Hoc1" component={Hoc1} />
       </Switch>
     </Suspense>
   </Router>
