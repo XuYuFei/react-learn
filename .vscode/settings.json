@@ -5,5 +5,6 @@
   "prettier.singleQuote": true,
   "minapp-vscode.prettier": {
   
-  }
+  },
+  "liveServer.settings.port": 5501
 }

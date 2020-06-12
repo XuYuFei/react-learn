@@ -84,6 +84,7 @@ class BlogPost extends React.Component {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 class App extends React.Component {
   render() {
     return (

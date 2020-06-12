@@ -15,6 +15,7 @@ const ErrorBoundaries = lazy(() => import('./views/4-ErrorBoundaries/Demo'))
 const Refs1 = lazy(() => import('./views/5-ForwardingRefs/Demo'))
 const Refs2 = lazy(() => import('./views/5-ForwardingRefs/Demo2'))
 const Hoc1 = lazy(() => import('./views/7-Hoc/Demo1'))
+const Library1 = lazy(() => import('./views/8-library/Demo'))
 
 const App = () => (
   <Router>
@@ -33,6 +34,7 @@ const App = () => (
         <Route path="/Context/Refs1" component={Refs1} />
         <Route path="/Context/Refs2" component={Refs2} />
         <Route path="/Context/Hoc1" component={Hoc1} />
+        <Route path="/Context/Library1" component={Library1} />
       </Switch>
     </Suspense>
   </Router>

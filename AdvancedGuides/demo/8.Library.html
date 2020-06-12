@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8.与第三方库协同</title>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script src="../../plugins/backbone-min.js"></script>
+
+  <script type="text/babel">
+    function Paragraph(props){
+      return <p>{props.text}</p>
+    }
+
+    const ParagraphView = Backbone.View.extend({
+      render() {
+        const text = this.model.get('text')
+        ReactDOM.render(
+          <Paragraph text={text} />,
+          this.el
+        )
+        return this
+      },
+
+      remove() {
+        ReactDOM.unmountComponentAtNode(this.el)
+        Backbone.View.prototype.remove.call(this)
+      }
+    })
+
+    const model = new Backbone.Model({ text: 'React works with Backbone!'})
+    const view = new ParagraphView({ model, el: '#app' })
+    view.render()
+  </script>
+</body>
+</html>
